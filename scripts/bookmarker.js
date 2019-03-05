@@ -47,7 +47,7 @@ const bookmarker = (function(){
 
   function render() {
     if (store.adding) {
-      $('.controls').html(`<form id="new-item-form"><label for="bookmark-title">Title:</label>
+      $('#new-item-form').html(`<label for="bookmark-title">Title:</label>
       <input type="text" name="title" id="bookmark-title"/>
       <label for="bookmark-url">url:</label>
       <input type="url" name="url" id="bookmark-url"/>
@@ -55,10 +55,10 @@ const bookmarker = (function(){
       <input type="text" name="description" id="description"/>
       <!-- need to research how to insert star selector-->
       <button id="cancel-btn">Cancel</button>
-      <input type="submit" value="Submit"/></form>`);
+      <input type="submit" value="Submit"/>`);
 
     } else {
-      $('.controls').html(`<button id="dropdown">Minimum Rating: *</button>
+      $('#new-item-form').html(`<button id="dropdown">Minimum Rating: *</button>
       <button id="add-new">Add New</button>`);
     }
 
