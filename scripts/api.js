@@ -34,11 +34,15 @@ const api = (function() {
   } 
 
   function addMark(item) {
-    const options = new Headers({
+    const body = JSON.stringify(item);
+    const options = {
       method: 'POST',
-      'Content-Type': 'application/json',
-      body: item
-    });
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: body
+    };
+
     return callApi(apiPath, options);
   }
   return {

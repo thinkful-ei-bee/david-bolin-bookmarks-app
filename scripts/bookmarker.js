@@ -39,6 +39,8 @@ const bookmarker = (function(){
         store.addMark(newItem);
         store.adding = false;
         bookmarker.render();
+      }).catch(error => {
+        //console.log(error.message); // need to fix this
       });
     }));
   }
@@ -52,7 +54,7 @@ const bookmarker = (function(){
       <label for="bookmark-url">url:</label>
       <input type="url" name="url" id="bookmark-url"/>
       <label for="description">Description:</label>
-      <input type="text" name="description" id="description"/>
+      <input type="text" name="desc" id="description"/>
       <!-- need to research how to insert star selector-->
       <button id="cancel-btn">Cancel</button>
       <input type="submit" value="Submit"/>`);
