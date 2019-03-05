@@ -5,7 +5,11 @@
 const bookmarker = (function(){
   
   // private methods
-
+  function createLi(item) {
+    return `<li>${item.title}<br>
+    Stars: ${item.rating}
+    <button class="delete-button">X</button></li>`;
+  }
 
   // public methods
 
@@ -25,6 +29,13 @@ const bookmarker = (function(){
       $('.controls').html(`<button id="dropdown">Minimum Rating: *</button>
       <button id="add-new">Add New</button>`);
     }
+
+    $('.bookmark-list').html('');
+    let htmlStr = '';
+    store.bookmarks.forEach(item => {
+      htmlStr += createLi(item);
+    });
+    $('.bookmark-list').html(htmlStr);
   }
 
   return {
