@@ -32,7 +32,8 @@ const bookmarker = (function(){
   }
 
   function handleSubmitNewItem() {
-    $('.controls').on('submit', '#new-item-form', (event => {
+    $('#new-item-form').on('submit', (event => {
+      console.log('submit triggered');
       event.preventDefault();
       const newItem = serializeObject(event.currentTarget);
       api.addMark(newItem).then(() => {
@@ -57,10 +58,11 @@ const bookmarker = (function(){
       <input type="text" name="desc" id="description"/>
       <!-- need to research how to insert star selector-->
       <button id="cancel-btn">Cancel</button>
-      <input type="submit" value="Submit"/>`);
+      <input type="submit" value="Submit" class="submit-new"/>`);
 
     } else {
-      $('#new-item-form').html(`<button id="dropdown">Minimum Rating: *</button>
+      $('#new-item-form').html('');
+      $('#min-or-add').html(`<button id="dropdown">Minimum Rating: *</button>
       <button id="add-new">Add New</button>`);
     }
 
