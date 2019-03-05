@@ -1,8 +1,11 @@
 'use strict';
 
-/*global api*/
+/*global api, store, bookmarker */
 
 $(function() {
   api.getBookmarks()
-    .then; // 
+    .then(data => data.forEach(item => {
+      store.addMark(item);
+      bookmarker.render();
+    }));
 });
