@@ -4,8 +4,10 @@
 
 $(function() {
   api.getBookmarks()
-    .then(data => data.forEach(item => {
+    .then(data => {data.forEach(item => {
       store.addMark(item);
-      bookmarker.render();
-    }));
+    });
+    bookmarker.createEventHandlers();
+    bookmarker.render();
+    });
 });

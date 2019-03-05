@@ -29,7 +29,21 @@ const api = (function() {
     return callApi(apiPath);
   }
 
+  function deleteMark(id) {
+    return callApi(apiPath + '/' + id, {method: 'DELETE'});
+  } 
+
+  function addMark(item) {
+    const options = new Headers({
+      method: 'POST',
+      'Content-Type': 'application/json',
+      body: item
+    });
+    return callApi(apiPath, options);
+  }
   return {
-    getBookmarks
+    getBookmarks,
+    deleteMark,
+    addMark
   };
 }());

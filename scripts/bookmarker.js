@@ -1,6 +1,6 @@
 'use strict';
 
-/* global store */
+/* global store, api */
 // eslint-disable-next-line no-unused-vars
 const bookmarker = (function(){
   
@@ -11,11 +11,43 @@ const bookmarker = (function(){
     <button class="delete-button">X</button></li>`;
   }
 
+  function serializeObject(form) {
+    const obj = {};
+    const arr = $(form).serializeArray();
+    arr.forEach(item => {obj[item.name] = item.value;});
+    return obj;
+  }
+  function handleAddButtonPressed() {
+    $('.controls').on('click', '#add-new', () => {
+      store.adding = true;
+      render();
+    });
+  }
+
+  function handleCancelButtonPressed() {
+    $('.controls').on('click', '#cancel-btn', () => {
+      store.adding = false;
+      render();
+    });
+  }
+
+  function handleSubmitNewItem() {
+    $('.controls').on('submit', '#new-item-form', (event => {
+      event.preventDefault();
+      const newItem = serializeObject(event.currentTarget);
+      api.addMark(newItem).then(() => {
+        store.addMark(newItem);
+        store.adding = false;
+        bookmarker.render();
+      });
+    }));
+  }
+
   // public methods
 
   function render() {
     if (store.adding) {
-      $('.controls').html(`<label for="bookmark-title">Title:</label>
+      $('.controls').html(`<form id="new-item-form"><label for="bookmark-title">Title:</label>
       <input type="text" name="title" id="bookmark-title"/>
       <label for="bookmark-url">url:</label>
       <input type="url" name="url" id="bookmark-url"/>
@@ -23,7 +55,7 @@ const bookmarker = (function(){
       <input type="text" name="description" id="description"/>
       <!-- need to research how to insert star selector-->
       <button id="cancel-btn">Cancel</button>
-      <input type="submit" value="Submit"/>`);
+      <input type="submit" value="Submit"/></form>`);
 
     } else {
       $('.controls').html(`<button id="dropdown">Minimum Rating: *</button>
@@ -38,7 +70,14 @@ const bookmarker = (function(){
     $('.bookmark-list').html(htmlStr);
   }
 
+  function createEventHandlers() {
+    handleAddButtonPressed();
+    handleCancelButtonPressed();
+    handleSubmitNewItem();
+  }
+
   return {
-    render
+    render,
+    createEventHandlers
   };
 }());
