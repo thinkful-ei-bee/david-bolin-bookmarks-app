@@ -72,6 +72,10 @@ input[type="submit"] {
   background-color: orange;
 }
 
+input[type="submit"]:hover, input[type="submit"]:focus {
+  background-color: brown;
+}
+
 input[type="text"] {
   border-radius: 5px;
 }
@@ -86,6 +90,10 @@ button {
   border-radius: 5px;
   margin-right: 5px;
   min-width: 100px;
+}
+
+button:hover, button:focus {
+  background-color: yellowgreen;
 }
 
 .close-button, .delete-button {
