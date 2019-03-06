@@ -4,18 +4,16 @@
 // eslint-disable-next-line no-unused-vars
 const bookmarker = (function(){
   
-  const stars = [
-    '&#9733;',
-    '&#9733;&#9733;',
-    '&#9733;&#9733;&#9733;',
-    '&#9733;&#9733;&#9733;&#9733;',
-    '&#9733;&#9733;&#9733;&#9733;&#9733'
-  ];
+  // setting up strings for the use of our render function
+  const stars = ['&#9733;'];
 
+  for (let i = 0; i < 4; i++) {
+    stars.push(stars[0] + stars[i]);
+  }
+ 
   let starStr = '';
   for (let i = 0; i < 5; i++) {
-    starStr += `<input type="radio", id="${i + 1}-star", name="rating", value="${i + 1}">
-    <label for="${i + 1}-star">${stars[i]}</label>`;
+    starStr += `<label for="${i + 1}-star">${stars[i]}</label><input type="radio", id="${i + 1}-star", name="rating", value="${i + 1}">`;
   }
 
   // private methods
@@ -27,7 +25,7 @@ const bookmarker = (function(){
       middle = `${item.desc}<br><a href="${item.url}" target="_blank">Visit Site</a>`;
     }
 
-    return `${start}${middle}${stars[item.rating - 1]}
+    return `${start}${middle}${item.rating ? stars[item.rating - 1] : 'No rating'}
     <button class="delete-button" aria-label="Delete This Item">&#x274C;</button><br></li>`;
   }
 
@@ -51,12 +49,13 @@ const bookmarker = (function(){
   function handleCancelButtonPressed() {
     $('.controls').on('click', '#cancel-btn', () => {
       store.adding = false;
+      store.error = null;
       render();
     });
   }
 
   function handleClickOnItem() {
-    $('.bookmark-list').on('click', (event => {
+    $('.bookmark-list').on('click', () => {
       const id = findId($(document.activeElement).closest('li'));
       if (id) {
         if (document.activeElement.innerHTML === '❌') {
@@ -69,7 +68,7 @@ const bookmarker = (function(){
           render();
         }
       }
-    }));
+    });
   }
 
   function handleSubmitNewItem() {
@@ -79,21 +78,43 @@ const bookmarker = (function(){
       api.addMark(newItem).then((res) => {
         store.addMark(res);
         store.adding = false;
+        store.error = null;
         bookmarker.render();
       }).catch(error => {
-        //console.log(error.message); // need to fix this
+        store.error = error;
+        render();
       });
     }));
   }
 
+  function handleCloseError() {
+    $('.error').click( () => {
+      store.error = null;
+      render();
+    });
+  }
+  
+  function handleSelectMinimum() {
+    $('#min-or-add').on('click', event => {
+      if (event.target.className === 'drop-btn') {
+        store.minimum = event.target.id.slice(-1);
+        render();
+      }
+    });
+  }
   // public methods
 
   function render() {
+    if (store.error) {
+      $('.error').html(`Could not submit bookmark: ${store.error.message}. <button class="close-button" aria-label="Close">&#x274C;</button>`);
+    } else {
+      $('.error').html('');
+    }
     if (store.adding) {
       $('#new-item-form').html(`<label for="bookmark-title">Title:</label>
       <input type="text" name="title" id="bookmark-title"/>
       <label for="bookmark-url">url:</label>
-      <input type="url" name="url" id="bookmark-url"/>
+      <input type="text" name="url" id="bookmark-url"/>
       <label for="description">Description:</label><input type="text" name="desc" id="description"/>
       <fieldset><legend>Rating</legend>
       ${starStr}</fieldset>
@@ -102,12 +123,13 @@ const bookmarker = (function(){
       $('#min-or-add').html('');
     } else {
       $('#new-item-form').html('');
-      $('#min-or-add').html(`<div class="dropdown"><button id="dropdown">Minimum Rating: ${stars[store.minimum - 1]}</button><div class="dropdown-menu">
+      $('#min-or-add').html(`<div class="dropdown"><button id="dropdown">Minimum Rating: ${(store.minimum === '0') ? 'None': stars[store.minimum - 1]}</button><div class="dropdown-menu">
       <button class="drop-btn" id="drop-btn-1">${stars[0]}</button>
       <button class="drop-btn" id="drop-btn-2">${stars[1]}</button>
       <button class="drop-btn" id="drop-btn-3">${stars[2]}</button>
       <button class="drop-btn" id="drop-btn-4">${stars[3]}</button>
       <button class="drop-btn" id="drop-btn-5">${stars[4]}</button>
+      <button class="drop-btn" id="drop-btn-0">No Minimum</button>
     </div></div>
       <button id="add-new">Add New</button>`);
     }
@@ -125,6 +147,8 @@ const bookmarker = (function(){
     handleCancelButtonPressed();
     handleSubmitNewItem();
     handleClickOnItem();
+    handleSelectMinimum();
+    handleCloseError();
   }
 
   return {

@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color: antiquewhite;
+}
+
 ul {
   list-style-type: none;
 }
@@ -12,7 +16,7 @@ header {
   margin-bottom: 75px;
 }
 
-main, .controls {
+main, .controls, .error {
   margin-left: 100px;
 }
 
@@ -20,26 +24,28 @@ main, .controls {
   margin-bottom: 50px;
 }
 
+.error {
+  color: red;
+}
 li {
   margin-bottom: 30px;
 }
 
 .dropdown {
-  position: relative;
   display: inline-block;
+  position: relative;
 }
 
 .dropdown-menu {
   display: none;
   position: absolute;
-  min-width: 120px;
 }
 
 .drop-btn {
   width: 100%;
-  z-index: 1;
 }
 
-.dropdown:hover .dropdown-menu {
+.dropdown:hover .dropdown-menu, input[type="radio"] {
   display: block;
 }
+
