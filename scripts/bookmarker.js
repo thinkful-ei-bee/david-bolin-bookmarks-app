@@ -6,15 +6,11 @@ const bookmarker = (function(){
   
   // setting up strings for the use of our render function
   const stars = ['&#9733;'];
-  
-  for (let i = 0; i < 4; i++) {
-    stars.push(stars[0] + stars[i]);
-  }
- 
   let starStr = '';
   let dropBtnStr = '';
-
+  
   for (let i = 0; i < 5; i++) {
+    stars.push(stars[0] + stars[i]);
     starStr += `<label for="${i + 1}-star">${stars[i]}</label><input type="radio", id="${i + 1}-star", name="rating", value="${i + 1}">`;
     dropBtnStr += `<button class="drop-btn" id="drop-btn-${i + 1}">${stars[i]}</button>`;
   }
