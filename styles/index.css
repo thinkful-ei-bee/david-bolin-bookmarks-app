@@ -30,6 +30,7 @@ main, header {
 
 .error {
   color: darkred;
+  font-weight: bold;
 }
 
 li {
