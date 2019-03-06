@@ -6,14 +6,17 @@ const bookmarker = (function(){
   
   // setting up strings for the use of our render function
   const stars = ['&#9733;'];
-
+  
   for (let i = 0; i < 4; i++) {
     stars.push(stars[0] + stars[i]);
   }
  
   let starStr = '';
+  let dropBtnStr = '';
+
   for (let i = 0; i < 5; i++) {
     starStr += `<label for="${i + 1}-star">${stars[i]}</label><input type="radio", id="${i + 1}-star", name="rating", value="${i + 1}">`;
+    dropBtnStr += `<button class="drop-btn" id="drop-btn-${i + 1}">${stars[i]}</button>`;
   }
 
   // private methods
@@ -124,14 +127,7 @@ const bookmarker = (function(){
     } else {
       $('#new-item-form').html('');
       $('#min-or-add').html(`<div class="dropdown"><button id="dropdown">Minimum Rating: ${(store.minimum === '0') ? 'None': stars[store.minimum - 1]}</button><div class="dropdown-menu">
-      <button class="drop-btn" id="drop-btn-1">${stars[0]}</button>
-      <button class="drop-btn" id="drop-btn-2">${stars[1]}</button>
-      <button class="drop-btn" id="drop-btn-3">${stars[2]}</button>
-      <button class="drop-btn" id="drop-btn-4">${stars[3]}</button>
-      <button class="drop-btn" id="drop-btn-5">${stars[4]}</button>
-      <button class="drop-btn" id="drop-btn-0">No Minimum</button>
-    </div></div>
-      <button id="add-new">Add New</button>`);
+      ${dropBtnStr}<button class="drop-btn" id="drop-btn-0">No Minimum</button></div></div><button id="add-new">Add New</button>`);
     }
 
     $('.bookmark-list').html('');
