@@ -20,10 +20,19 @@ const bookmarker = (function(){
 
   // private methods
   function createLi(item) {
-    //const 
-    return `<li><button class="expand-item">${item.title}</button><br>
-    ${stars[item.rating - 1]}
+    const start = `<li class="list-item" data-item-id="${item.id}"><button class="expand-item">${item.title}</button><br>`;
+    let middle = '';
+
+    if (item.detailed) {
+      middle = `${item.desc}<br>`;
+    }
+
+    return `${start}${middle}${stars[item.rating - 1]}
     <button class="delete-button" aria-label="Delete This Item">&#x274C;</button><br></li>`;
+  }
+
+  function findId(item) {
+    return $(item).closest('.list-item').data('item-id');
   }
 
   function serializeObject(form) {
@@ -48,18 +57,26 @@ const bookmarker = (function(){
 
   function handleClickOnItem() {
     $('.bookmark-list').on('click', (event => {
-      console.log('clicked on list');
-      console.log(document.activeElement);
+      const id = findId($(document.activeElement).closest('li'));
+
+      if (document.activeElement.innerHTML === '❌') {
+        api.deleteMark(id).then ( () => {
+          store.deleteMark(id);
+          render();
+        });
+      } else {
+        store.findMark(id).detailed = !store.findMark(id).detailed;
+        render();
+      }
     }));
   }
 
   function handleSubmitNewItem() {
     $('#new-item-form').on('submit', (event => {
-      console.log('submit triggered');
       event.preventDefault();
       const newItem = serializeObject(event.currentTarget);
-      api.addMark(newItem).then(() => {
-        store.addMark(newItem);
+      api.addMark(newItem).then((res) => {
+        store.addMark(res);
         store.adding = false;
         bookmarker.render();
       }).catch(error => {

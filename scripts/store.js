@@ -8,10 +8,19 @@ const store = (function() {
     this.bookmarks.push(item);
   }
   
+  function deleteMark(id) {
+    this.bookmarks = this.bookmarks.filter(ele => ele.id !== id);
+  }
+
+  function findMark(id) {
+    return this.bookmarks.find(ele => ele.id === id);
+  }
   return {
     bookmarks: [],
     adding: false,
     error: null,
-    addMark
+    addMark,
+    deleteMark,
+    findMark
   };
 }());
