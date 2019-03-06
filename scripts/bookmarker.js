@@ -27,7 +27,6 @@ const bookmarker = (function(){
     if (item.detailed) {
       middle = `${item.desc}<br><a href="${item.url}" target="_blank">Visit Site</a>`;
     }
-
     return `${start}${middle}</li>`;
   }
 
@@ -131,7 +130,7 @@ const bookmarker = (function(){
 
     $('.bookmark-list').html('');
     let htmlStr = '';
-    store.bookmarks.filter(item => item.rating >= store.minimum)     .forEach(item => { 
+    store.bookmarks.filter(item => item.rating >= store.minimum).forEach(item => { 
       htmlStr += createLi(item); 
     });
     $('.bookmark-list').html(htmlStr);
