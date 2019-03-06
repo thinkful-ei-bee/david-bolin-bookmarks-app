@@ -12,7 +12,9 @@ const bookmarker = (function(){
   
   for (let i = 0; i < 5; i++) {
     stars.push(stars[0] + stars[i]);
-    starStr += `<label for="${i + 1}-star">${stars[i]}</label><input type="radio", id="${i + 1}-star", name="rating", value="${i + 1}" aria-label="${starNames[i]}">`;
+
+    starStr += `<input type="radio", id="${i + 1}-star", name="rating", value="${i + 1}" aria-label="${starNames[i]}"><label for="${i + 1}-star">${stars[i]}</label><br>`;
+
     dropBtnStr += `<button class="drop-btn" id="drop-btn-${i + 1}" aria-label="${i < 5 ? starNames[i] : ''}">${stars[i]}</button>`;
   }
 

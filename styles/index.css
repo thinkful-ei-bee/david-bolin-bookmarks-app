@@ -55,8 +55,16 @@ li {
   width: 100%;
 }
 
-.dropdown:hover .dropdown-menu, input[type="radio"] {
+.dropdown:hover .dropdown-menu {
   display: block;
+}
+
+input[type="radio"] {
+  display: inline-block;
+}
+
+input[type="submit"] {
+  background-color: orange;
 }
 
 button {
