@@ -48,13 +48,3 @@ li {
 .dropdown:hover .dropdown-menu, input[type="radio"] {
   display: block;
 }
-
-.screen-reader-text {
-  display: inline-block;
-  height: 1px;
-  left: -10000px;
-  position: absolute;
-  top: auto;
-  width: 1px;
-  overflow: hidden;
-}
