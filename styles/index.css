@@ -16,7 +16,11 @@ h1 {
   margin-bottom: 75px;
 }
 
-main, .controls, .error {
+main, header {
+  max-width: 1000px;
+}
+
+.error {
   margin-left: 100px;
 }
 
@@ -27,13 +31,19 @@ main, .controls, .error {
 .error {
   color: darkred;
 }
+
 li {
   margin-bottom: 30px;
+}
+
+#min-or-add {
+  text-align: center;
 }
 
 .dropdown {
   display: inline-block;
   position: relative;
+  margin-right: 30px;
 }
 
 .dropdown-menu {
@@ -47,4 +57,32 @@ li {
 
 .dropdown:hover .dropdown-menu, input[type="radio"] {
   display: block;
+}
+
+button {
+  background-color: lightseagreen;
+  border-radius: 5px;
+  margin-right: 5px;
+  min-width: 100px;
+}
+
+.close-button, .delete-button {
+  background-color: rgb(224, 22, 22);
+  font-size: 0.8em;
+  margin-right: 15px;
+  min-width: 25px;
+}
+
+a:link {
+  color: blue;
+  text-decoration: none;
+}
+
+a:visited {
+  color: purple;
+}
+
+a:hover {
+  color: red;
+  text-decoration: underline;
 }

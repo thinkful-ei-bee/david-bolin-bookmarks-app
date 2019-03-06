@@ -8,7 +8,7 @@ const bookmarker = (function(){
   const stars = ['&#9733;'];
   let starStr = '';
   let dropBtnStr = '';
-  let starNames = ['one star', 'two stars', 'three stars', 'four stars', 'five stars'];
+  const starNames = ['one star', 'two stars', 'three stars', 'four stars', 'five stars'];
   
   for (let i = 0; i < 5; i++) {
     stars.push(stars[0] + stars[i]);
@@ -18,15 +18,15 @@ const bookmarker = (function(){
 
   // private methods
   function createLi(item) {
-    const start = `<li class="list-item" data-item-id="${item.id}"><button class="expand-item">${item.title}</button><br>`;
+    const start = `<li class="list-item" data-item-id="${item.id}"><button class="delete-button" aria-label="Delete This Item">&#x274C;</button><button class="expand-item">${item.title}</button>${item.rating ? stars[item.rating - 1] : 'No rating'}<br>`;
+
     let middle = '';
 
     if (item.detailed) {
       middle = `${item.desc}<br><a href="${item.url}" target="_blank">Visit Site</a>`;
     }
 
-    return `${start}${middle}${item.rating ? stars[item.rating - 1] : 'No rating'}
-    <button class="delete-button" aria-label="Delete This Item">&#x274C;</button><br></li>`;
+    return `${start}${middle}</li>`;
   }
 
   function findId(item) {
