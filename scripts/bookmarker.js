@@ -8,11 +8,12 @@ const bookmarker = (function(){
   const stars = ['&#9733;'];
   let starStr = '';
   let dropBtnStr = '';
+  let starNames = ['one star', 'two stars', 'three stars', 'four stars', 'five stars'];
   
   for (let i = 0; i < 5; i++) {
     stars.push(stars[0] + stars[i]);
-    starStr += `<label for="${i + 1}-star">${stars[i]}</label><input type="radio", id="${i + 1}-star", name="rating", value="${i + 1}">`;
-    dropBtnStr += `<button class="drop-btn" id="drop-btn-${i + 1}">${stars[i]}</button>`;
+    starStr += `<label for="${i + 1}-star">${stars[i]}</label><input type="radio", id="${i + 1}-star", name="rating", value="${i + 1}" aria-label="${starNames[i]}">`;
+    dropBtnStr += `<button class="drop-btn" id="drop-btn-${i + 1}" aria-label="${i < 5 ? starNames[i] : ''}">${stars[i]}</button>`;
   }
 
   // private methods
