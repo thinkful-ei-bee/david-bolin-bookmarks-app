@@ -113,15 +113,15 @@ const bookmarker = (function(){
       $('.error').html('');
     }
     if (store.adding) {
-      $('#new-item-form').html(`<label for="bookmark-title">Title:</label>
-      <input type="text" name="title" id="bookmark-title"/>
-      <label for="bookmark-url">url:</label>
-      <input type="text" name="url" id="bookmark-url"/>
-      <label for="description">Description:</label><input type="text" name="desc" id="description"/>
+      $('#new-item-form').html(`<label for="bookmark-title">Title:
+      <input type="text" name="title" id="bookmark-title"/></label>
+      <label for="bookmark-url">url:
+      <input type="text" name="url" id="bookmark-url"/></label>
+      <label for="description">Description:<input type="text" name="desc" id="description"/></label>
       <fieldset><legend>Rating</legend>
-      ${starStr}</fieldset>
+      ${starStr}</fieldset><div class="sub-or-cancel">
       <button id="cancel-btn">Cancel</button>
-      <input type="submit" value="Submit" class="submit-new"/>`);
+      <input type="submit" value="Submit" class="submit-new"/></div>`);
       $('#min-or-add').html('');
     } else {
       $('#new-item-form').html('');
