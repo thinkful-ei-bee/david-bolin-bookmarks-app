@@ -21,9 +21,9 @@ const bookmarker = (function(){
   // private methods
   function createLi(item) {
     //const 
-    return `<li>${item.title}<br>
+    return `<li><button class="expand-item">${item.title}</button><br>
     ${stars[item.rating - 1]}
-    <button class="delete-button">X</button></li>`;
+    <button class="delete-button" aria-label="Delete This Item">&#x274C;</button><br></li>`;
   }
 
   function serializeObject(form) {
@@ -44,6 +44,13 @@ const bookmarker = (function(){
       store.adding = false;
       render();
     });
+  }
+
+  function handleClickOnItem() {
+    $('.bookmark-list').on('click', (event => {
+      console.log('clicked on list');
+      console.log(document.activeElement);
+    }));
   }
 
   function handleSubmitNewItem() {
@@ -93,6 +100,7 @@ const bookmarker = (function(){
     handleAddButtonPressed();
     handleCancelButtonPressed();
     handleSubmitNewItem();
+    handleClickOnItem();
   }
 
   return {
