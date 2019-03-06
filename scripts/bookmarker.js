@@ -24,7 +24,7 @@ const bookmarker = (function(){
     let middle = '';
 
     if (item.detailed) {
-      middle = `${item.desc}<br>`;
+      middle = `${item.desc}<br><a href="${item.url}" target="_blank">Visit Site</a>`;
     }
 
     return `${start}${middle}${stars[item.rating - 1]}
@@ -58,15 +58,16 @@ const bookmarker = (function(){
   function handleClickOnItem() {
     $('.bookmark-list').on('click', (event => {
       const id = findId($(document.activeElement).closest('li'));
-
-      if (document.activeElement.innerHTML === '❌') {
-        api.deleteMark(id).then ( () => {
-          store.deleteMark(id);
+      if (id) {
+        if (document.activeElement.innerHTML === '❌') {
+          api.deleteMark(id).then ( () => {
+            store.deleteMark(id);
+            render();
+          });
+        } else {
+          store.findMark(id).detailed = !store.findMark(id).detailed;
           render();
-        });
-      } else {
-        store.findMark(id).detailed = !store.findMark(id).detailed;
-        render();
+        }
       }
     }));
   }
@@ -101,14 +102,20 @@ const bookmarker = (function(){
       $('#min-or-add').html('');
     } else {
       $('#new-item-form').html('');
-      $('#min-or-add').html(`<button id="dropdown">Minimum Rating: *</button>
+      $('#min-or-add').html(`<div class="dropdown"><button id="dropdown">Minimum Rating: ${stars[store.minimum - 1]}</button><div class="dropdown-menu">
+      <button class="drop-btn" id="drop-btn-1">${stars[0]}</button>
+      <button class="drop-btn" id="drop-btn-2">${stars[1]}</button>
+      <button class="drop-btn" id="drop-btn-3">${stars[2]}</button>
+      <button class="drop-btn" id="drop-btn-4">${stars[3]}</button>
+      <button class="drop-btn" id="drop-btn-5">${stars[4]}</button>
+    </div></div>
       <button id="add-new">Add New</button>`);
     }
 
     $('.bookmark-list').html('');
     let htmlStr = '';
-    store.bookmarks.forEach(item => {
-      htmlStr += createLi(item);
+    store.bookmarks.filter(item => item.rating >= store.minimum)     .forEach(item => { 
+      htmlStr += createLi(item); 
     });
     $('.bookmark-list').html(htmlStr);
   }

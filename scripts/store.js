@@ -19,6 +19,7 @@ const store = (function() {
     bookmarks: [],
     adding: false,
     error: null,
+    minimum: 3,
     addMark,
     deleteMark,
     findMark

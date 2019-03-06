@@ -12,6 +12,34 @@ header {
   margin-bottom: 75px;
 }
 
+main, .controls {
+  margin-left: 100px;
+}
+
+.controls {
+  margin-bottom: 50px;
+}
+
 li {
   margin-bottom: 30px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  min-width: 120px;
+}
+
+.drop-btn {
+  width: 100%;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
 }
