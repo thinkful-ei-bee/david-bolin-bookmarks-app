@@ -4,12 +4,12 @@
 const store = (function() {
 
   function addMark(item) {
+    item.detailed = false;
     this.bookmarks.push(item);
   }
   
   return {
     bookmarks: [],
-    detailed: false,
     adding: false,
     error: null,
     addMark
